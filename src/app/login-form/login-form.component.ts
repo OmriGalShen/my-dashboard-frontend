@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoggedUser } from 'src/app/interfaces/login';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -10,24 +10,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit {
-  model: LoggedUser = { email: 'email@email.com', password: '123' };
   loginForm: FormGroup;
-  message: string;
+  loading = false;
+  submitted = false;
   returnUrl: string;
+  error = '';
+
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) {
+    if (this.authService.currentUserValue) {
+      this.router.navigate(['']);
+    }
+  }
 
   ngOnInit() {
-
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],
     });
+
     this.returnUrl = '';
-    this.authService.logout();
   }
 
   get email() {
@@ -38,23 +44,26 @@ export class LoginFormComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  login() {
+  onSubmit() {
+    this.submitted = true;
+
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
-    } else {
-      if (
-        this.email.value == this.model.email &&
-        this.password.value == this.model.password
-      ) {
-        console.log('Login successful');
-        //this.authService.authLogin(this.model);
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('token', this.email.value);
-        this.router.navigate([this.returnUrl]);
-      } else {
-        this.message = 'Please check your userid and password';
-      }
     }
+
+    this.loading = true;
+    this.authService
+      .login(this.email.value, this.password.value)
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          this.router.navigate([this.returnUrl]);
+        },
+        (error) => {
+          this.error = error;
+          this.loading = false;
+        }
+      );
   }
 }

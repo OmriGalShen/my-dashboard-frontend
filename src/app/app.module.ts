@@ -9,8 +9,11 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ClientDetailComponent } from './client-detail/client-detail.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import { AuthGuard } from './guards/auth.guard'; 
+import { AuthGuard } from './guards/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './services/auth.service';
+import { ClientService } from './services/client.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LoginFormComponent,
     RegisterFormComponent,
     ClientDetailComponent,
-    MainPageComponent
+    MainPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,9 +29,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatSliderModule,
     FormsModule,
-    ReactiveFormsModule 
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [AuthGuard],
-  bootstrap: [AppComponent]
+  providers: [AuthGuard, AuthService, ClientService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

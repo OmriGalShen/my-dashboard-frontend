@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { first } from 'rxjs';
+import { ClientDetails, OnlineClient, User } from '../models/API_Classes';
 import { AuthService } from '../services/auth.service';
+import { ClientService } from '../services/client.service';
 
 @Component({
   selector: 'app-main-page',
@@ -8,17 +10,36 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit {
-  username: string;
+  loading = false;
+  currentUser: User;
+  onlineClients: OnlineClient[];
+  clientDetails: ClientDetails;
 
-  constructor(private router: Router, private authService: AuthService) {}
-
-  ngOnInit() {
-    this.username = localStorage.getItem('token');
+  constructor(
+    private authService: AuthService,
+    private clientService: ClientService
+  ) {
+    this.currentUser = this.authService.currentUserValue;
   }
 
-  logout() {
-    console.log('logout');
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  ngOnInit() {
+    this.loading = true;
+    this.clientService
+      .getOnlineClients()
+      .pipe(first())
+      .subscribe((clients) => {
+        this.loading = false;
+        this.onlineClients = clients;
+      });
+  }
+
+  displayDetails(client: OnlineClient): void {
+    this.clientService
+      .getClientDetails(client.username)
+      .pipe(first())
+      .subscribe((details) => {
+        this.clientDetails = details;
+        console.log(details);
+      });
   }
 }

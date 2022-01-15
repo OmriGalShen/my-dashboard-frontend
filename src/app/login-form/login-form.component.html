@@ -1,41 +1,53 @@
-<div class="container">
-  <div class="col-md-6 col-md-offset-3 loginBox">
-    <h3>Log In</h3>
-    <p *ngIf="message" class="text-center error">{{ message }}</p>
-    <form [formGroup]="loginForm" (ngSubmit)="login()" #ngForm="ngForm">
-      <div
-        class="form-group clearfix"
-        [ngClass]="{ 'has-error': ngForm.submitted && this.password.errors }"
-      >
-        <label for="email" class="col-md-3 col-sm-5 col-xs-12">Email</label>
-        <div class="col-md-9 col-sm-7 col-xs-12">
-          <input type="text" class="form-control" formControlName="email" />
-          <div *ngIf="ngForm.submitted && this.email.errors" class="help-block">
+<div class="col-md-6 offset-md-3 mt-5">
+  <div class="alert alert-info">
+    <strong>Normal User</strong> - U: user P: user<br />
+    <strong>Administrator</strong> - U: admin P: admin
+  </div>
+  <div class="card">
+    <h4 class="card-header">Login</h4>
+    <div class="card-body">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && this.email.errors }"
+          />
+          <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
             <div *ngIf="this.email.errors?.['required']">Email is required</div>
           </div>
         </div>
-      </div>
-      <div
-        class="form-group clearfix"
-        [ngClass]="{ 'has-error': ngForm.submitted && this.password.errors }"
-      >
-        <label for="password" class="col-md-3 col-sm-5 col-xs-12"
-          >Password</label
-        >
-        <div class="col-md-9 col-sm-7 col-xs-12">
+        <div class="form-group">
+          <label for="password">Password</label>
           <input
             type="password"
-            class="form-control"
             formControlName="password"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && this.password.errors }"
           />
-          <div *ngIf="ngForm.submitted && this.password.errors" class="help-block">
-            <div *ngIf="this.password.errors?.['required']">Password is required</div>
+          <div
+            *ngIf="submitted && this.password.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="this.password.errors?.['required']">
+              Password is required
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 form-group text-right">
-        <button class="btn btn-success" type="submit">Login</button>
-      </div>
-    </form>
+        <div> <br/> </div>
+        <button [disabled]="loading" class="btn btn-primary">
+          <span
+            *ngIf="loading"
+            class="spinner-border spinner-border-sm mr-1"
+          ></span>
+          Login
+        </button>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+          {{ error }}
+        </div>
+      </form>
+    </div>
   </div>
 </div>
