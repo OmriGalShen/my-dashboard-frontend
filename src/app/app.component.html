@@ -1,12 +1,38 @@
-<!-- nav -->
-<div class="container">
-  <h1 class="d-flex justify-content-center m-3">{{ title }}</h1>
-</div>
-
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-  <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/">Home</a>
-    <a class="nav-item nav-link" (click)="logout()">Logout</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container-fluid">
+    <div
+      class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"
+    >
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item active">
+          <a class="nav-item nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item" *ngIf="currentUser == null">
+          <a class="nav-item nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="currentUser == null">
+          <a class="nav-item nav-link" routerLink="/register">Register</a>
+        </li>
+      </ul>
+    </div>
+    <div class="mx-auto order-0">
+      <a class="navbar-brand mx-auto" href="#">{{ title }}</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target=".dual-collapse2"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="currentUser">
+          <a role='button' class="nav-item nav-link" (click)="logout()">Logout</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
@@ -15,11 +41,14 @@
   <router-outlet></router-outlet>
 </div>
 
-<footer class="bg-light text-center text-lg-start fixed-bottom">
+<footer class="bg-dark text-center text-lg-start fixed-bottom">
   <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+  <div
+    class="text-center p-3 text-light"
+    style="background-color: rgba(0, 0, 0, 0.2)"
+  >
     © 2022 Copyright:
-    <span class="text-dark">Omri Gal Shenahv</span>
+    <span class="text-light">Omri Gal Shenahv</span>
   </div>
   <!-- Copyright -->
 </footer>
