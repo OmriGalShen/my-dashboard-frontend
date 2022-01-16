@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './models/API_Classes';
 import { AuthService } from './services/auth.service';
@@ -12,13 +12,15 @@ export class AppComponent {
   title = 'My Dashboard';
   currentUser: User;
 
-  @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload', ['$event']) // logout when exiting page
   unloadHandler(event) {
     this.sendLogout();
   }
 
   constructor(private router: Router, private authService: AuthService) {
-    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.authService.userObervable.subscribe(
+      (user) => (this.currentUser = user)
+    ); // update local variable
   }
 
   clickLogout() {

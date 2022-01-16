@@ -34,8 +34,6 @@ export class RegisterFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required, Validators.minLength(4)],
     });
-
-    this.returnUrl = '/login';
   }
 
   get email() {
@@ -64,18 +62,15 @@ export class RegisterFormComponent implements OnInit {
       password: this.password.value,
       email: this.email.value,
     };
-    this.clientService
-      .registerClient(client)
-      .pipe(first())
-      .subscribe(
-        (data) => {
-          this.router.navigate([this.returnUrl]);
-        },
-        (error) => {
-          this.error =
-            'Error: invalid registration info - email or username may be already in used';
-          this.loading = false;
-        }
-      );
+    this.clientService.registerClient(client).subscribe(
+      (data) => {
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        this.error =
+          'Error: invalid registration info - email or username may be already in used';
+        this.loading = false;
+      }
+    );
   }
 }

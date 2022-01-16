@@ -21,24 +21,26 @@ export class MainPageComponent implements OnInit {
     private authService: AuthService,
     private clientService: ClientService
   ) {
-    this.currentUser = this.authService.currentUserValue;
+    this.authService.userObervable.subscribe((user) => (this.currentUser = user)); // update local variable
   }
 
   private fetchOnlineClient() {
-    this.clientService.getOnlineClients().subscribe((clients) => {
-      this.loading = false;
-      this.onlineClients = clients;
-      this.onlineClients.forEach((c) => {
-        c.loginTime = new Date(c.loginTime);
-        c.lastUpdated = new Date(c.lastUpdated);
+    this.clientService
+      .getOnlineClients()
+      .subscribe((clients: OnlineClient[]) => {
+        this.loading = false;
+        this.onlineClients = clients;
+        this.onlineClients.forEach((c) => {
+          c.loginTime = new Date(c.loginTime); //convert Date format
+          c.lastUpdated = new Date(c.lastUpdated); //convert Date format
+        });
       });
-    });
   }
 
   ngOnInit() {
     this.loading = true;
     this.fetchOnlineClient(); // inital fetch
-    this.updateSubscription = interval(3000).subscribe((data) =>
+    this.updateSubscription = interval(3000).subscribe((_) =>
       this.fetchOnlineClient()
     ); // update every 3 seconds
   }
