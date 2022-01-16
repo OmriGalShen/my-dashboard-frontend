@@ -14,6 +14,7 @@ export class MainPageComponent implements OnInit {
   currentUser: User;
   onlineClients: OnlineClient[];
   clientDetails: ClientDetails;
+  displayClientDetails = false;
 
   constructor(
     private authService: AuthService,
@@ -39,6 +40,7 @@ export class MainPageComponent implements OnInit {
       .pipe(first())
       .subscribe((details) => {
         this.clientDetails = details;
+        this.displayClientDetails = true;
         console.log(details);
       });
   }

@@ -1,18 +1,58 @@
 <div class="card mt-4">
-  <h4 class="card-header">Home</h4>
+  <h4 class="card-header text-center">Dashboard</h4>
   <div class="card-body">
-      <p>{{currentUser.username}} You're logged</p>
-      <p>This page can be accessed by <u>all authenticated users</u>.</p>
-      <p class="mb-1">Current user from secure api end point:</p>
-      <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-      <ul>
-        <li *ngFor="let onlineClient of onlineClients">
-           {{onlineClient.username}}
-           {{onlineClient.loginTime}}
-           {{onlineClient.lastUpdated}}
-           {{onlineClient.ip}}
-          <button title="client details" (click)="displayDetails(onlineClient)">Details</button>
-        </li>
-      </ul>
+    <p class="lead text-center">{{ currentUser.username }} You're logged in!</p>
+    <br />
+    <br />
+
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Login time</th>
+                <th scope="col">Last updated</th>
+                <th scope="col">IP</th>
+                <th scope="col">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let onlineClient of onlineClients">
+                <td>{{ onlineClient.username }}</td>
+                <td>{{ onlineClient.loginTime }}</td>
+                <td>{{ onlineClient.lastUpdated }}</td>
+                <td>{{ onlineClient.ip }}</td>
+                <td>
+                  <button
+                    class="btn btn-secondary"
+                    title="client details "
+                    (click)="displayDetails(onlineClient)"
+                  >
+                    Details
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          <br />
+          <br />
+          <app-client-detail [details]="clientDetails"></app-client-detail>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
   </div>
 </div>
