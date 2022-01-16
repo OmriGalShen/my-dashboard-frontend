@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent {
   title = 'My Dashboard';
   currentUser: User;
 
@@ -19,10 +19,6 @@ export class AppComponent implements OnDestroy {
 
   constructor(private router: Router, private authService: AuthService) {
     this.authService.currentUser.subscribe((x) => (this.currentUser = x));
-  }
-
-  ngOnDestroy() {
-    this.sendLogout();
   }
 
   clickLogout() {
