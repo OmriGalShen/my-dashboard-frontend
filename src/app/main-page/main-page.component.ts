@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs';
+import { first, interval, Subscription } from 'rxjs';
 import { ClientDetails, OnlineClient, User } from '../models/API_Classes';
 import { AuthService } from '../services/auth.service';
 import { ClientService } from '../services/client.service';
@@ -15,6 +15,7 @@ export class MainPageComponent implements OnInit {
   onlineClients: OnlineClient[];
   clientDetails: ClientDetails;
   displayClientDetails = false;
+  updateSubscription: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -23,15 +24,23 @@ export class MainPageComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
   }
 
+  private fetchOnlineClient() {
+    this.clientService.getOnlineClients().subscribe((clients) => {
+      this.loading = false;
+      this.onlineClients = clients;
+      this.onlineClients.forEach((c) => {
+        c.loginTime = new Date(c.loginTime);
+        c.lastUpdated = new Date(c.lastUpdated);
+      });
+    });
+  }
+
   ngOnInit() {
     this.loading = true;
-    this.clientService
-      .getOnlineClients()
-      .pipe(first())
-      .subscribe((clients) => {
-        this.loading = false;
-        this.onlineClients = clients;
-      });
+    this.fetchOnlineClient(); // inital fetch
+    this.updateSubscription = interval(3000).subscribe((data) =>
+      this.fetchOnlineClient()
+    ); // update every 3 seconds
   }
 
   displayDetails(client: OnlineClient): void {
@@ -40,6 +49,9 @@ export class MainPageComponent implements OnInit {
       .pipe(first())
       .subscribe((details) => {
         this.clientDetails = details;
+        this.clientDetails.registerTime = new Date(
+          this.clientDetails.registerTime
+        );
         this.displayClientDetails = true;
         console.log(details);
       });

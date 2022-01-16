@@ -7,7 +7,7 @@ export class User {
 export class OnlineClient {
   username: string;
   loginTime: Date;
-  lastUpdated: string;
+  lastUpdated: Date;
   ip: string;
 }
 
