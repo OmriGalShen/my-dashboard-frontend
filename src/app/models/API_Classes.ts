@@ -21,5 +21,4 @@ export class RegisterClient {
   username: string;
   password: string;
   email: string;
-  ip: string;
 }
