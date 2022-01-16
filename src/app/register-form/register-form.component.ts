@@ -30,9 +30,9 @@ export class RegisterFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', Validators.required, Validators.minLength(4)],
     });
 
     this.returnUrl = '/login';
@@ -72,7 +72,8 @@ export class RegisterFormComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         (error) => {
-          this.error = error;
+          this.error =
+            'Error: invalid registration info - email or username may be already in used';
           this.loading = false;
         }
       );

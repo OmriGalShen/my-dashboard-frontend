@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         (error) => {
-          this.error = error;
+          this.error = 'Error: invalid login credentials';
           this.loading = false;
         }
       );
