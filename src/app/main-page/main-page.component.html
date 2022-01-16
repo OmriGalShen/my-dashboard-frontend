@@ -7,7 +7,8 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-8">
+        <div class="col-8 card">
+          <h4 class="card-header text-center">Online Clients</h4>
           <table class="table">
             <thead>
               <tr>
@@ -37,10 +38,13 @@
             </tbody>
           </table>
         </div>
-        <div class="col">
-          <br />
-          <br />
+        <div class="col card">
+          <h4 class="card-header text-center">Information</h4>
           <app-client-detail [details]="clientDetails"></app-client-detail>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     </div>
