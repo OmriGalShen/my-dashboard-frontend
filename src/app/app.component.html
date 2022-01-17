@@ -1,45 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <div class="container-fluid">
-    <div
-      class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"
-    >
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item active">
-          <a class="nav-item nav-link lead" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item lead" *ngIf="currentUser == null">
-          <a class="nav-item nav-link" routerLink="/login">Login</a>
-        </li>
-        <li class="nav-item lead" *ngIf="currentUser == null">
-          <a class="nav-item nav-link" routerLink="/register">Register</a>
-        </li>
-      </ul>
-    </div>
-    <div class="mx-auto order-0">
-      <a class="navbar-brand mx-auto lead" href="#">{{ title }}</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target=".dual-collapse2"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item" *ngIf="currentUser">
-          <a
-            role="button"
-            class="nav-item nav-link lead"
-            (click)="clickLogout()"
-            >Logout</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<app-navbar [title]="title" [sendLogout]="sendLogout"></app-navbar>
 
 <!-- main app container -->
 <div class="container">
