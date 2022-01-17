@@ -8,14 +8,13 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent{
+export class AppComponent {
   title = 'My Dashboard';
   currentUser: User;
 
   @HostListener('window:beforeunload', ['$event'])
   doSomething($event) {
-    if(this.currentUser) this.sendLogout();
-    return true;
+    this.sendLogout();
   }
 
   constructor(private router: Router, private authService: AuthService) {
