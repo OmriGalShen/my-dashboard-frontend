@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {
     this.authService.userObservable.subscribe((user) => {
       if (user) this.isLoggedIn = true;
+      else this.isLoggedIn = false;
     });
   }
   canActivate(
