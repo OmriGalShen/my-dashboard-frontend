@@ -42,3 +42,4 @@ testem.log
 Thumbs.db
 /localhost.crt
 /localhost.key
+/certificate.cnf
