@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class NavbarComponent {
   @Input() title;
   @Input() sendLogout;
+  isShown: boolean = false;
 
   currentUser: User;
 
@@ -19,6 +20,7 @@ export class NavbarComponent {
   }
 
   clickLogout() {
+    this.isShown = false;
     this.sendLogout();
   }
 }
