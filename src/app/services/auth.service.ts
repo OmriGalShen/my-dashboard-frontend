@@ -8,18 +8,16 @@ import { User } from '../models/API_Classes';
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private userSubject: BehaviorSubject<User>;
+  public userObservable: Observable<User>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser'))
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.userSubject = new BehaviorSubject<User>(null);
+    this.userObservable = this.userSubject.asObservable();
   }
 
   public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+    return this.userSubject.value;
   }
 
   login(email: string, password: string) {
@@ -31,21 +29,21 @@ export class AuthService {
       .pipe(
         map((user) => {
           if (user) {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.setItem('isLoggedIn', 'true');
-            this.currentUserSubject.next(user);
+            this.userSubject.next(user);
           }
-
           return user;
         })
       );
   }
 
-  logout() {
-    this.http.post<any>(`${environment.API_URL}/logout-client`, {});
-    localStorage.removeItem('currentUser');
-    localStorage.setItem('isLoggedIn', 'false');
-    this.currentUserSubject.next(null);
-    
+  logout(username: string) {
+    return this.http
+      .post<any>(`${environment.API_URL}/logout-client/${username}`, {})
+      .pipe(
+        map((res) => {
+          this.userSubject.next(null);
+          return res;
+        })
+      );
   }
 }

@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent{
   title = 'My Dashboard';
   currentUser: User;
 
@@ -18,15 +18,18 @@ export class AppComponent {
   }
 
   constructor(private router: Router, private authService: AuthService) {
-    this.authService.currentUser.subscribe((x) => (this.currentUser = x));
+    this.authService.userObservable.subscribe((x) => (this.currentUser = x));
   }
 
   clickLogout() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.sendLogout();
   }
 
   sendLogout() {
-    if (this.currentUser) this.authService.logout();
+    if (this.currentUser) {
+      this.authService.logout(this.currentUser.username).subscribe((x) => {
+        this.router.navigate(['/login']);
+      });
+    }
   }
 }
