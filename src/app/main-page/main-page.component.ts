@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { first, interval, Subscription } from 'rxjs';
 import { ClientDetails, OnlineClient, User } from '../models/API_Classes';
 import { AuthService } from '../services/auth.service';
@@ -9,7 +9,7 @@ import { ClientService } from '../services/client.service';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent implements OnInit,OnDestroy {
   loading = false;
   currentUser: User;
   onlineClients: OnlineClient[];
@@ -41,6 +41,10 @@ export class MainPageComponent implements OnInit {
     this.updateSubscription = interval(3000).subscribe((data) =>
       this.fetchOnlineClient()
     ); // update every 3 seconds
+  }
+
+  ngOnDestroy(){
+    this.updateSubscription.unsubscribe();
   }
 
   displayDetails(client: OnlineClient): void {
