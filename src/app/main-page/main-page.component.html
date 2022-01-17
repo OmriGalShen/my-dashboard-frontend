@@ -19,8 +19,8 @@
             >Online Clients</mat-card-title
           >
           <div class="container">
-            <div class="row">
-              <table mat-table [dataSource]="onlineClients">
+            <div class="row fix-mobile">
+              <mat-table [dataSource]="onlineClients" class="table">
                 <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
@@ -107,7 +107,7 @@
                   mat-row
                   *matRowDef="let row; columns: displayedColumns"
                 ></tr>
-              </table>
+              </mat-table>
             </div>
           </div>
         </mat-card>
