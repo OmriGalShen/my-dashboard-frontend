@@ -9,5 +9,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
   background-image: url("https://images.pexels.com/photos/3745234/pexels-photo-3745234.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-image: url("./assets/pexels-alex.jpg");
   background-size: cover;
+}
+.light-bold {
+  font-weight: 500;
 }
