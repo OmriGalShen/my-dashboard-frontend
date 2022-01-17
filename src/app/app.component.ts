@@ -12,20 +12,21 @@ export class AppComponent {
   title = 'My Dashboard';
   currentUser: User;
 
-  @HostListener('window:beforeunload', ['$event'])
-  doSomething($event) {
-    this.sendLogout();
+  doBeforeUnload() {
+    return true;
+  }
+
+  doUnload() {
+    if (this.currentUser) {
+      this.authService.logout(this.currentUser.username).subscribe((x) => {});
+    }
   }
 
   constructor(private router: Router, private authService: AuthService) {
     this.authService.userObservable.subscribe((x) => (this.currentUser = x));
   }
 
-  clickLogout() {
-    this.sendLogout();
-  }
-
-  sendLogout() {
+  logout() {
     if (this.currentUser) {
       this.authService.logout(this.currentUser.username).subscribe((x) => {
         this.router.navigate(['/login']);

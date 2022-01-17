@@ -1,8 +1,8 @@
-<app-navbar [title]="title" [sendLogout]="sendLogout"></app-navbar>
+<app-navbar [title]="title" [logout]="logout"></app-navbar>
 
 <!-- main app container -->
 <div class="container">
-  <router-outlet></router-outlet>
+  <router-outlet (window:beforeunload)="doBeforeUnload()" (window:unload)="doUnload()"></router-outlet>
 </div>
 
 <footer class="bg-dark text-center text-lg-start fixed-bottom">
