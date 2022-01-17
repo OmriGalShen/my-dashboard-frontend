@@ -32,7 +32,7 @@ export class RegisterFormComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required, Validators.minLength(4)],
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
 
     this.returnUrl = '/login';
