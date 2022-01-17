@@ -1,10 +1,12 @@
 <div class="card" *ngIf="details">
-  <div class="card-header">Client Details</div>
+  <div class="card-header lead">Client Details</div>
   <div class="card-body">
     <div *ngIf="details">
-      <strong>Username: </strong> {{ details.username }} <br />
-      <strong>Register Time: </strong> {{ details.registerTime }}<br />
-      <strong>Login count: </strong> {{ details.loginCount }}<br />
+      <span class="light-bold">Username: </span> {{ details.username }} <br />
+      <span class="light-bold">Register Time: </span>
+      {{ details.registerTime.toLocaleString() }}<br />
+      <span class="light-bold">Login count: </span> {{ details.loginCount
+      }}<br />
     </div>
   </div>
 </div>
