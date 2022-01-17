@@ -64,7 +64,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
           this.clientDetails.registerTime
         );
         this.displayClientDetails = true;
-        console.log(details);
       });
   }
 }
