@@ -13,8 +13,9 @@ export class AppComponent{
   currentUser: User;
 
   @HostListener('window:beforeunload', ['$event'])
-  unloadHandler(event) {
-    this.sendLogout();
+  doSomething($event) {
+    if(this.currentUser) this.sendLogout();
+    return true;
   }
 
   constructor(private router: Router, private authService: AuthService) {
