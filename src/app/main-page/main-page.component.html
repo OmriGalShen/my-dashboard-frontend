@@ -1,6 +1,85 @@
-<div class="card mt-4">
-  <h4 class="card-header text-center">Dashboard</h4>
-  <div class="card-body">
+<mat-card>
+  <mat-card-title class="text-center">Dashboard</mat-card-title>
+  <div class="container">
+    <div class="row">
+      <mat-card class="col-lg-8 col-sm-12">
+        <mat-card-title class="card-header text-center"
+          >Online Clients</mat-card-title
+        >
+        <div class="container">
+          <div class="row">
+            <table mat-table [dataSource]="onlineClients">
+              <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef>Username</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.username }}
+                </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="loginTime">
+                <th mat-header-cell *matHeaderCellDef>Login Time</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.loginTime.toLocaleString() }}
+                </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="lastUpdated">
+                <th mat-header-cell *matHeaderCellDef>Last Updated</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.lastUpdated.toLocaleString() }}
+                </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="ip">
+                <th mat-header-cell *matHeaderCellDef>IP</th>
+                <td mat-cell *matCellDef="let element">{{ element.ip }}</td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="details">
+                <th mat-header-cell *matHeaderCellDef>Details</th>
+                <td mat-cell *matCellDef="let element">
+                  <button
+                    mat-raised-button
+                    title="client details "
+                    (click)="displayDetails(element)"
+                  >
+                    Details
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="col col-lg-4 col-sm-12">
+        <mat-card-title class="card-header text-center"
+          >Information</mat-card-title
+        >
+        <app-client-detail [details]="clientDetails"></app-client-detail>
+        <br />
+        <br />
+      </mat-card>
+    </div>
+  </div>
+  <br />
+  <br />
+</mat-card>
+<!-- 
+
+<mat-card>
+  <mat-card-title class="text-center">Dashboard</mat-card-title>
     <p class="lead text-center">{{ currentUser.username }} You're logged in!</p>
     <br />
     <br />
@@ -48,8 +127,4 @@
     </div>
     <br />
     <br />
-    <br />
-    <br />
-    <br />
-  </div>
-</div>
+</mat-card> -->

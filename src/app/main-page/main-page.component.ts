@@ -9,13 +9,20 @@ import { ClientService } from '../services/client.service';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent implements OnInit,OnDestroy {
+export class MainPageComponent implements OnInit, OnDestroy {
   loading = false;
   currentUser: User;
   onlineClients: OnlineClient[];
   clientDetails: ClientDetails;
   displayClientDetails = false;
   updateSubscription: Subscription;
+  displayedColumns: string[] = [
+    'username',
+    'loginTime',
+    'lastUpdated',
+    'ip',
+    'details',
+  ];
 
   constructor(
     private authService: AuthService,
@@ -43,7 +50,7 @@ export class MainPageComponent implements OnInit,OnDestroy {
     ); // update every 3 seconds
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.updateSubscription.unsubscribe();
   }
 
